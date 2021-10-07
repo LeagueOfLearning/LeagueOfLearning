@@ -1,5 +1,7 @@
 ﻿using System;
-using PoniLCU;
+using System.Linq;
+using System.Net.Http;
+using KertiLCU;
 
 namespace DevConsole
 {
@@ -7,14 +9,11 @@ namespace DevConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello");
-            LeagueClient leagueClient = new LeagueClient();
-            while (!leagueClient.IsConnected)
-            {
-                continue;
-            }
-            string body = "{\"profileIconId\": "+23+"}";
-            leagueClient.Request("put", "/lol-summoner/v1/current-summoner/icon", body); 
+            var leagueClient = new LeagueClient();
+            string body = "{\"profileIconId\": "+22+"}";
+            leagueClient.Request("put", "/lol-summoner/v1/current-summoner/icon", body);
         }
+
+        
     }
 }
