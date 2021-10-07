@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
+using KertiLCU;
 
 namespace DevConsole
 {
@@ -6,8 +9,11 @@ namespace DevConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello");
-            string body = "{\"profileIconId\": "+23+"}";
+            var leagueClient = new LeagueClient();
+            string body = "{\"profileIconId\": "+22+"}";
+            leagueClient.Request("put", "/lol-summoner/v1/current-summoner/icon", body);
         }
+
+        
     }
 }
