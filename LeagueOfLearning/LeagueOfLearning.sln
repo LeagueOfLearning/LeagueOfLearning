@@ -1,6 +1,8 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevConsole", "DevConsole\DevConsole.csproj", "{58C8E337-E8C7-4224-8145-6871203AAB33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataScraper", "DataScraper\DataScraper.csproj", "{60FB14FD-AC15-41A2-9E44-C06E7D0537E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,9 @@ Global
 		{58C8E337-E8C7-4224-8145-6871203AAB33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58C8E337-E8C7-4224-8145-6871203AAB33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58C8E337-E8C7-4224-8145-6871203AAB33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FB14FD-AC15-41A2-9E44-C06E7D0537E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FB14FD-AC15-41A2-9E44-C06E7D0537E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FB14FD-AC15-41A2-9E44-C06E7D0537E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FB14FD-AC15-41A2-9E44-C06E7D0537E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
