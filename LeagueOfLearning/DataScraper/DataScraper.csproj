@@ -2,7 +2,15 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net48</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KertiRiot\KertiRiot.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Camille.RiotGames" Version="3.0.0-nightly-2021-10-02-52f6de537a" />
+    </ItemGroup>
 
 </Project>
