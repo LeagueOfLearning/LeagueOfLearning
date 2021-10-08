@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http.Json;
 using Camille.Enums;
 using Camille.RiotGames;
+using Camille.RiotGames.MatchV5;
+using Camille.RiotGames.SummonerV4;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DataScraper
 {
@@ -11,29 +17,51 @@ namespace DataScraper
         {
             var stream = new StreamReader("../../../apiKey.txt");
             var key = stream.ReadToEnd();
-           var camApi = RiotGamesApi.NewInstance(key);
-           var summoners = new[]
-           {
-               camApi.SummonerV4().GetBySummonerName(PlatformRoute.NA1, "Kertaak")
-           };
-           foreach (var summoner in summoners)
-           {
-               Console.WriteLine($"{summoner.Name}'s Top 10 Champs:");
+            RiotGamesApi camApi = RiotGamesApi.NewInstance(key);
+            var matchData = new MatchCollection();
+            var summoner = camApi.SummonerV4().GetBySummonerName(PlatformRoute.NA1, "Kertaak");
+            var collection = new MatchCollection();
+            AddPlayersMatches(summoner, camApi, 0, collection);
+            string test = collection.GetMatchesInJson();
+            var writer = new StreamWriter("../../../stuff.json");
+            writer.Write(test);
+            writer.Close();
+        }
 
-               var masteries =
-                   camApi.ChampionMasteryV4().GetAllChampionMasteries(PlatformRoute.NA1, summoner.Id);
+        static public void AddPlayersMatches(Summoner player, RiotGamesApi api, int matchCount, MatchCollection collection, int maxMatchCount = 1)
+        {
+            if (matchCount >= maxMatchCount)
+            {
+                return;
+            }
+            var matches = api.MatchV5().GetMatchIdsByPUUID(RegionalRoute.AMERICAS, player.Puuid);
+            foreach (var matchId in matches)
+            {
+                Match match = api.MatchV5().GetMatch(RegionalRoute.AMERICAS, matchId);
+                collection.AddMatch(match);
+                matchCount += 1;
+                var players = match.Info.Participants;
+            }
+        }
 
-               for (var i = 0; i < 10; i++)
-               {
-                   var mastery = masteries[i];
-                   // Get champion for this mastery.
-                   var champ = (Champion) mastery.ChampionId;
-                   // print i, champ id, champ mastery points, and champ level
-                   Console.WriteLine("{0,3}) {1,-16} {2,10:N0} ({3})", i + 1, champ.ToString(),
-                       mastery.ChampionPoints, mastery.ChampionLevel);
-               }
-               Console.WriteLine();
-           } 
+        public class MatchCollection
+        {
+            private Dictionary<string, Match> _matches = new Dictionary<string, Match>();
+
+            public void AddMatch(Match matchToAdd)
+            {
+                if (_matches.ContainsKey(matchToAdd.Metadata.MatchId))
+                {
+                    return;
+                }
+
+                _matches.Add(matchToAdd.Metadata.MatchId, matchToAdd);
+            }
+
+            public string GetMatchesInJson()
+            {
+                return JsonConvert.SerializeObject(_matches);
+            }
         }
     }
 }
